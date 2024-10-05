@@ -8,55 +8,62 @@ interface IThought extends Document {
     reactions: Schema.Types.ObjectId[]
 };
 
-// const assignmentSchema = new Schema<IAssignment>(
-//     {
-//         assignmentId: {
-//             type: Schema.Types.ObjectId,
-//             default: () => new Types.ObjectId(),
-//         },
-//         name: {
-//             type: String,
-//             required: true,
-//             maxlength: 50,
-//             minlength: 4,
-//             default: 'Unnamed assignment',
-//         },
-//         score: {
-//             type: Number,
-//             required: true,
-//             default: () => Math.floor(Math.random() * (100 - 70 + 1) + 70),
-//         },
-//     },
-//     {
-//         timestamps: true,
-//         _id: false
-//     }
-// );
+interface IReaction extends Document {
+    assignmentId: Schema.Types.ObjectId,
+    text: string,
+    username: string,
+    createdAt: Date
+};
 
-const userSchema = new Schema<IUser>({
-    userId: {
+const reactionSchema = new Schema<IReaction>(
+    {
+        assignmentId: {
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId(),
+        },
+        text: {
+            type: String,
+            required: true,
+            maxlength: 280,
+        },
+        username: {
+            type: String,
+            required: true,
+            username: {
+                type: Schema.Types.ObjectId,
+                ref: 'user',
+            }
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        },
+    },
+    {
+        timestamps: true
+    }
+);
+
+const thoughtSchema = new Schema<IThought>({
+    thoughtId: {
         type: Schema.Types.ObjectId,
         default: () => new Types.ObjectId(),
     },
+    text: {
+        type: String,
+        required: true,
+        max_length: 280,
+        minlength: 1,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
     username: {
-        type: String,
-        required: true,
-        max_length: 50,
-        minlength: 4,
+     type: String,
+     required: true,   
     },
-    email: {
-        type: String,
-        required: true,
-        max_length: 50,
-    },
-    thoughts: [{
-     type: Schema.Types.ObjectId,
-        ref: 'thought',   
-    }],
-    friends: [{
-        type: Schema.Types.ObjectId,
-        ref: 'user',
-    }],
+    reactions: [reactionSchema],
 },
     {
         toJSON: {
@@ -66,6 +73,6 @@ const userSchema = new Schema<IUser>({
     }
 );
 
-const User = model('User', userSchema);
+const Thought = model('Thought', thoughtSchema);
 
-export default User;
+export default Thought;
