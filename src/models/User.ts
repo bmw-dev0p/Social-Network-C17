@@ -1,11 +1,5 @@
 import { Schema, Types, model, type Document } from 'mongoose';
 
-// interface IAssignment extends Document {
-//     assignmentId: Schema.Types.ObjectId,
-//     name: string,
-//     score: number
-// };
-
 interface IUser extends Document {
     userId: Schema.Types.ObjectId,
     username: string,
@@ -13,31 +7,6 @@ interface IUser extends Document {
     thoughts: Schema.Types.ObjectId[],
     friends: Schema.Types.ObjectId[]
 };
-
-// const assignmentSchema = new Schema<IAssignment>(
-//     {
-//         assignmentId: {
-//             type: Schema.Types.ObjectId,
-//             default: () => new Types.ObjectId(),
-//         },
-//         name: {
-//             type: String,
-//             required: true,
-//             maxlength: 50,
-//             minlength: 4,
-//             default: 'Unnamed assignment',
-//         },
-//         score: {
-//             type: Number,
-//             required: true,
-//             default: () => Math.floor(Math.random() * (100 - 70 + 1) + 70),
-//         },
-//     },
-//     {
-//         timestamps: true,
-//         _id: false
-//     }
-// );
 
 const userSchema = new Schema<IUser>({
     userId: {
