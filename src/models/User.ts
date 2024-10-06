@@ -1,7 +1,6 @@
-import { Schema, Types, model, type Document } from 'mongoose';
+import { Schema, model, type Document } from 'mongoose';
 
 interface IUser extends Document {
-    userId: Schema.Types.ObjectId,
     username: string,
     email: string,
     thoughts: Schema.Types.ObjectId[],
@@ -9,10 +8,6 @@ interface IUser extends Document {
 };
 
 const userSchema = new Schema<IUser>({
-    userId: {
-        type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId(),
-    },
     username: {
         type: String,
         required: true,
@@ -35,6 +30,8 @@ const userSchema = new Schema<IUser>({
     {
         toJSON: {
             getters: true,
+            virtuals: false,
+            versionKey: false,
         },
         timestamps: true
     }
