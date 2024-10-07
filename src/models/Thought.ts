@@ -18,7 +18,7 @@ const reactionSchema = new Schema<IReaction>(
     {
         reactionId: {
             type: Schema.Types.ObjectId,
-            default: () => new Types.ObjectId(),
+            default: () => new Types.ObjectId(), // renames _id to reactionId
         },
         text: {
             type: String,

@@ -2,12 +2,31 @@ import { Request, Response } from 'express';
 // import { ObjectId } from 'mongodb';
 import { Thought } from '../models/index.js';
 
-// Aggregate function to get number of students overall
-
+// function for # of thoughts
 export const thoughtCount = async () => {
     const numberOfThoughts = await Thought.aggregate()
         .count('thoughtCount');
     return numberOfThoughts;
+}
+
+// function for # of reactions
+// first tried to use "unwind" but it returned total number of reactions for entire doc.
+export const reactionCount = async (thoughtId: string) => {
+    const thought = await Thought.findById(thoughtId);
+    if (thought) {
+        const reactionCount = thought.reactions.length;
+        return reactionCount;
+    } else {
+        throw new Error('Thought not found');
+    }
+}
+
+export const reactionCountTotal = async () => {
+    const numberOfReactions = await Thought.aggregate([
+        { $unwind: "$reactions" },
+        { $count: "reactionCount" }
+    ]);
+    return numberOfReactions;
 }
 
 /**
@@ -21,6 +40,7 @@ export const getAllThoughts = async (_req: Request, res: Response) => {
         const thoughtObj = {
             thoughts,
             thoughtCount: await thoughtCount(),
+            reactionTotal: await reactionCountTotal(),
         }
 
         res.json(thoughtObj);
@@ -43,7 +63,7 @@ export const getThoughtById = async (req: Request, res: Response) => {
         if (thought) {
             res.json({
                 thought,
-                // grade: await grade(thoughtId)
+                reactionCount: await reactionCount(thoughtId),
             });
         } else {
             res.status(404).json({
@@ -150,7 +170,7 @@ export const addReaction = async (req: Request, res: Response) => {
 }
 
 /**
- * DELETE Reaction based on /thoughts/:thoughtId/reactions
+ * DELETE Reaction based on /:thoughtId/reactions/:reactionId
  * @param string thoughttId
  * @param string reactionId
  * @returns object thought 
