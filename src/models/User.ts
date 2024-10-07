@@ -17,6 +17,7 @@ const userSchema = new Schema<IUser>({
         type: String,
         required: true,
         max_length: 50,
+        match: [/.+@.+\..+/, 'Please enter a valid e-mail address'], // regex for email validation
     },
     thoughts: [{
      type: Schema.Types.ObjectId,

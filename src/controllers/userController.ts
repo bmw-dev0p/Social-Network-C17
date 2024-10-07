@@ -97,7 +97,7 @@ export const updateUser = async (req: Request, res: Response) => {
     }
   };
 /**
- * DELETE User based on id /Users/:id
+ * DELETE User based on id /users/:id
  * @param string id
  * @returns string 
 */
@@ -105,7 +105,7 @@ export const updateUser = async (req: Request, res: Response) => {
 export const deleteUser = async (req: Request, res: Response) => {
     try {
         // delete User
-        const user = await User.findOneAndDelete({ _id: req.params.UserId });
+        const user = await User.findOneAndDelete({ _id: req.params.userId });
 
         if (!user) {
             return res.status(404).json({ message: 'No such User exists' });
@@ -169,9 +169,13 @@ export const addFriend = async (req: Request, res: Response) => {
 
 export const removeFriend = async (req: Request, res: Response) => {
     try {
+        console.log('You are removing a friend');
+        console.log(req.params);
+        
+        
         const user = await User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $pull: { friends: { friendId: req.params.friendId } } },
+            { $pull: { friends: { _id: req.params.friendId } } },
             { runValidators: true, new: true }
         );
 
