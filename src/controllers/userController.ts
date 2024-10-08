@@ -3,13 +3,22 @@ import { Request, Response } from 'express';
 import { User, Thought } from '../models/index.js';
 
 // Aggregate function to get number of Users overall
-
 export const userCount = async () => {
     const userCount = await User.aggregate()
         .count('UserCount');
     return userCount;
 }
 
+// function for # of friends
+export const friendCount = async (userId: string) => {
+    const user = await User.findById(userId);
+    if (user) {
+        const friendCount = user.friends.length;
+        return friendCount;
+    } else {
+        throw new Error('User not found');
+    }
+}
 
 /**
  * GET All Users /users
@@ -17,6 +26,8 @@ export const userCount = async () => {
 */
 export const getAllUsers = async (_req: Request, res: Response) => {
     try {
+        console.log('getting all users');
+
         const users = await User.find();
 
         const userObj = {
@@ -40,11 +51,13 @@ export const getAllUsers = async (_req: Request, res: Response) => {
 export const getUserById = async (req: Request, res: Response) => {
     const { userId } = req.params;
     try {
+        console.log('getting user by id');
+
         const user = await User.findById(userId);
         if (user) {
             res.json({
                 user,
-                // grade: await grade(userId)
+                friendCount: await friendCount(userId),
             });
         } else {
             res.status(404).json({
@@ -60,42 +73,48 @@ export const getUserById = async (req: Request, res: Response) => {
 
 /**
  * POST User /users
- * @param object User
+ * @body object User (username, email)
  * @returns a single User object
 */
 
 export const createUser = async (req: Request, res: Response) => {
     try {
+        console.log('creating a user');
+
         const user = await User.create(req.body);
         res.json(user);
     } catch (err) {
         res.status(500).json(err);
     }
 }
+
 /**
  * PUT User based on id /users/:id
- * @param object id, username
+ * @param string id
+ * @body object username, email
  * @returns a single User object
 */
 export const updateUser = async (req: Request, res: Response) => {
     try {
-      const user = await User.findOneAndUpdate(
-        { _id: req.params.userId },
-        { $set: req.body },
-        { runValidators: true, new: true }
-      );
-  
-      if (!user) {
-        res.status(404).json({ message: 'No user with this id!' });
-      }
-  
-      res.json(user)
+        console.log('updating a user');
+
+        const user = await User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $set: req.body },
+            { runValidators: true, new: true }
+        );
+
+        if (!user) {
+            res.status(404).json({ message: 'No user with this id!' });
+        }
+
+        res.json(user)
     } catch (error: any) {
-      res.status(400).json({
-        message: error.message
-      });
+        res.status(400).json({
+            message: error.message
+        });
     }
-  };
+};
 /**
  * DELETE User based on id /users/:id
  * @param string id
@@ -104,66 +123,85 @@ export const updateUser = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
     try {
-        // delete User
+        console.log('deleting a user');
+        
+        // Delete the user
         const user = await User.findOneAndDelete({ _id: req.params.userId });
 
         if (!user) {
-            return res.status(404).json({ message: 'No such User exists' });
+            return res.status(404).json({ message: 'No such user exists' });
         }
 
-        // delete associated thoughs with user
-        const thought = await Thought.findOneAndUpdate(
-            { users: req.params.userId },
-            { $pull: { users: req.params.userId } },
-            { new: true }
-        );
+        // Delete all thoughts associated with the user
+        const thoughts = await Thought.deleteMany({ username: user.username });
 
-        if (!thought) {
+        if (!thoughts) {
             return res.status(404).json({
-                message: 'User deleted, but no Thoughts found',
+                message: 'User deleted, but no thoughts found',
             });
         }
 
-        return res.json({ message: 'User successfully deleted' });
+        return res.json({ message: 'User and associated thoughts successfully deleted' });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         return res.status(500).json(err);
     }
-}
+};
+
 
 /**
- * POST friend based on /users/:UserId/friends
+ * POST friend based on /users/:userId/friends
  * @param string id
- * @param object assignment
+ * @body object assignment
  * @returns object User 
 */
-
+// I wanted the functionality of adding a friend by username, so I modified the function to accept a username instead of an _id
+// also added functionality to create a new user if the friend doesn't exist
 export const addFriend = async (req: Request, res: Response) => {
-    console.log('You are adding a friend');
+    console.log('You are adding a friend by username');
     console.log(req.body);
+
     try {
+        console.log('You are adding a friend');
+        
+        // get friend's username from request body
+        const { username } = req.body;
+
+        // Check if a user with the given username already exists
+        let friend = await User.findOne({ username });
+
+        // If the friend doesn't exist, create a new user
+        if (!friend) {
+            console.log(`No user found with username ${username}. Creating a new user...`);
+            friend = new User({ username, email: `${username}@example.com` }); // Assign a default email or modify as needed
+            await friend.save();
+            console.log(`New user created with username ${username} and _id ${friend._id}`);
+        }
+
+        // Add the friend's _id and username to the current user's friends list
         const user = await User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $addToSet: { friends: req.body } },
+            { $addToSet: { friends: { _id: friend._id, username: friend.username } } },
             { runValidators: true, new: true }
         );
 
         if (!user) {
-            return res
-                .status(404)
-                .json({ message: 'No User found with that ID :(' });
+            return res.status(404).json({ message: 'No user found with that ID :(' });
         }
 
         return res.json(user);
     } catch (err) {
+        console.error(err);
         return res.status(500).json(err);
     }
-}
+};
+
+
 
 /**
  * DELETE friend based on /users/:userId/friends/:friendId
- * @param string assignmentId
- * @param string UserId
+ * @param string userId
+ * @param string friendId
  * @returns object User 
 */
 
@@ -171,11 +209,10 @@ export const removeFriend = async (req: Request, res: Response) => {
     try {
         console.log('You are removing a friend');
         console.log(req.params);
-        
-        
+
         const user = await User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $pull: { friends: { _id: req.params.friendId } } },
+            { $pull: { friends: req.params.friendId } },
             { runValidators: true, new: true }
         );
 

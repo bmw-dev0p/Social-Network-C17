@@ -21,6 +21,14 @@ const reactionSeedData = [
       text: "I don't really think so.",
       username: "peterPiper",
     },
+    {
+      text: "SSssssSSss",
+      username: "dangerNoodle",
+    },
+    {
+      text: "Relatable.",
+      username: "trashPanda",
+    },
   ];
   
   // Seed data for Thoughts
@@ -28,29 +36,37 @@ const reactionSeedData = [
     {
       text: "Hold the door!",
       username: "johnSnow",
-      // since the requirements want a nested array of subdocuments, 
-      // we can insert the entire reaction object
-      reactions: [reactionSeedData[0]], 
+      reactions: [], 
     },
     {
       text: "Const until you cant",
       username: "rickyRoll",
-      reactions: [reactionSeedData[2]],
+      reactions: [],
     },
     {
       text: "AI will take my job",
       username: "cyberPunk",
-      reactions: [reactionSeedData[3]],
+      reactions: [],
     },
     {
       text: "I love the smell of napalm in the morning.",
       username: "machoMan",
-      reactions: [reactionSeedData[4]],
+      reactions: [],
     },
     {
       text: "I picked a peck of pickled peppers.",
       username: "peterPiper",
-      reactions: [reactionSeedData[1]],
+      reactions: [],
+    },
+    {
+      text: "Don't ssSSsstep on me!",
+      username: "dangerNoodle",
+      reactions: [],
+    },
+    {
+      text: "To eat or not to eat, that is the question.",
+      username: "trashPanda",
+      reactions: [],
     },
   ];
   
@@ -69,7 +85,7 @@ const reactionSeedData = [
       friends: [],
     },
     {
-      username: 'cyberPunk",',
+      username: 'cyberPunk',
       email: 'cyber@example.com',
       thoughts: [],
       friends: [],
@@ -86,6 +102,18 @@ const reactionSeedData = [
       thoughts: [],
       friends: [],
     },
+    {
+      username: 'dangerNoodle',
+      email: 'noodle@example.com',
+      thoughts: [],
+      friends: [],
+    },
+    {
+      username: 'trashPanda',
+      email: 'trash@example.com',
+      thoughts: [],
+      friends: [],
+    },
   ];
 
-  export { thoughtSeedData, userSeedData };
+  export { reactionSeedData, thoughtSeedData, userSeedData };

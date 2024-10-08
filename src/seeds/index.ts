@@ -1,7 +1,7 @@
 import db from '../config/connection.js';
 import { User, Thought } from '../models/index.js';
 import mongoose from 'mongoose';
-import { thoughtSeedData, userSeedData } from './data.js';
+import { reactionSeedData, thoughtSeedData, userSeedData } from './data.js';
 
 
 // Function to seed data
@@ -15,7 +15,7 @@ const seedDatabase = async () => {
 
     // Seed Thoughts first
     console.log('Seeding thoughts...');
-    const thoughts = await Thought.create(thoughtSeedData);  
+    const thoughts = await Thought.create(thoughtSeedData);
     console.log('Thoughts inserted!');
 
     // Seed Users next
@@ -23,21 +23,43 @@ const seedDatabase = async () => {
     const users = await User.insertMany(userSeedData);
     console.log('Users inserted!');
 
-    // Associate friends with users (adding their user IDs to the friends array)
-    await User.findByIdAndUpdate(users[0]._id, { friends: [users[1]._id, users[2]._id] }); // john_doe -> jane_smith, mike_jones
-    await User.findByIdAndUpdate(users[1]._id, { friends: [users[0]._id, users[3]._id] }); // jane_smith -> john_doe, emily_clark
-    await User.findByIdAndUpdate(users[2]._id, { friends: [users[3]._id] });              // mike_jones -> emily_clark
-    await User.findByIdAndUpdate(users[3]._id, { friends: [users[1]._id] });              // emily_clark -> jane_smith
-    await User.findByIdAndUpdate(users[4]._id, { friends: [users[0]._id, users[2]._id] }); // robert_brown -> john_doe, mike_jones
+    // Seed Reactions
+    console.log('Seeding reactions...');
+    for (let i = 0; i < thoughts.length; i++) {
+      await Thought.findByIdAndUpdate(thoughts[i]._id, { $push: { reactions: reactionSeedData[i] } });
+    }
 
-    
+    // Associate friends with users (adding in reverse order)
+    console.log('Associating friends...');
+    for (let i = 0; i < users.length; i++) {
+      // reverse count
+      const j = (users.length - 1) - i;
+
+      // Assign friend props
+      const friend = {
+        _id: users[j]._id,
+        username: users[j].username
+      };
+
+      // Update the user with the friend
+      await User.findByIdAndUpdate(
+        users[i]._id, // i counting up
+        { friends: [friend] } // j counting down
+      );
+    }
+
+    console.log('One friend assigned per user in reverse order!');
+
+    console.log('Friends associated!');
+
+
     // Associate thoughts with users
-    await User.findByIdAndUpdate(users[0]._id,  { thoughts: [thoughts[0]._id] }); // john_doe -> Learning Mongoose is fun!
-    await User.findByIdAndUpdate(users[1]._id,  { thoughts: [thoughts[1]._id] }); // jane_smith -> Mongoose schemas are powerful.
-    await User.findByIdAndUpdate(users[2]._id,  { thoughts: [thoughts[2]._id] }); // mike_jones -> I enjoy building REST APIs!
-    await User.findByIdAndUpdate(users[3]._id,  { thoughts: [thoughts[3]._id] }); // emily_clark -> JavaScript is such a versatile language.
-    await User.findByIdAndUpdate(users[4]._id,  { thoughts: [thoughts[4]._id] }); // robert_brown -> Functional programming is very cool.
- 
+    console.log('Associating thoughts with users...');
+    for (let i = 0; i < users.length; i++) {
+      await User.findByIdAndUpdate(users[i]._id, { thoughts: [thoughts[i]._id] });
+    }
+    console.log('Thoughts associated with users!');
+
 
     console.log('Friends associated!');
   } catch (error) {
@@ -50,10 +72,10 @@ const runSeed = async () => {
     console.log('Connecting to database...');
     await db();
     console.log('Database connected!');
-    
+
     await seedDatabase();
     console.log('Seeding complete! 🌱');
-    
+
     // Close the connection once seeding is complete
     console.log('Closing database connection...');
     await mongoose.connection.close();
