@@ -21,12 +21,13 @@ export const reactionCount = async (thoughtId: string) => {
     }
 }
 
+// function for total # of reactions
 export const reactionCountTotal = async () => {
-    const numberOfReactions = await Thought.aggregate([
+    const reactionTotal = await Thought.aggregate([
         { $unwind: "$reactions" },
         { $count: "reactionCount" }
     ]);
-    return numberOfReactions;
+    return reactionTotal;
 }
 
 /**
@@ -35,7 +36,15 @@ export const reactionCountTotal = async () => {
 */
 export const getAllThoughts = async (_req: Request, res: Response) => {
     try {
+        console.log('getting all thoughts');
+
         const thoughts = await Thought.find();
+        // console.log(`single thought: ${thoughts[0]}`);
+
+        // populate unnecessary since it is in seeds ?
+        // const thoughtPop = await Thought.find().populate('reactions');
+        // console.log(`populated thought: ${thoughtPop[0]}`);
+
 
         const thoughtObj = {
             thoughts,
@@ -59,6 +68,8 @@ export const getAllThoughts = async (_req: Request, res: Response) => {
 export const getThoughtById = async (req: Request, res: Response) => {
     const { thoughtId } = req.params;
     try {
+        console.log('getting thought by id');
+
         const thought = await Thought.findById(thoughtId);
         if (thought) {
             res.json({
@@ -79,12 +90,14 @@ export const getThoughtById = async (req: Request, res: Response) => {
 
 /**
  * POST Thought /thoughts
- * @param object thought
+ * @body object thought
  * @returns a single thought object
 */
 
 export const createThought = async (req: Request, res: Response) => {
     try {
+        console.log('creating a thought');
+
         const thought = await Thought.create(req.body);
         res.json(thought);
     } catch (err) {
@@ -94,37 +107,42 @@ export const createThought = async (req: Request, res: Response) => {
 
 /**
  * PUT Thought based on id /thoughts/:id
- * @param object id, username
+ * @param string id
+ * @body text, username
  * @returns a single Thought object
 */
 export const updateThought = async (req: Request, res: Response) => {
     try {
-      const thought = await Thought.findOneAndUpdate(
-        { _id: req.params.thoughtId },
-        { $set: req.body },
-        { runValidators: true, new: true }
-      );
-  
-      if (!thought) {
-        res.status(404).json({ message: 'No thought with this id!' });
-      }
-  
-      res.json(thought)
+        console.log('updating a thought');
+
+        const thought = await Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $set: req.body },
+            { runValidators: true, new: true }
+        );
+
+        if (!thought) {
+            res.status(404).json({ message: 'No thought with this id!' });
+        }
+
+        res.json(thought)
     } catch (error: any) {
-      res.status(400).json({
-        message: error.message
-      });
+        res.status(400).json({
+            message: error.message
+        });
     }
-  };
+};
 
 /**
- * DELETE thought based on id /Thoughts/:id
+ * DELETE thought based on id /thoughts/:id
  * @param string id
  * @returns string 
 */
 
 export const deleteThought = async (req: Request, res: Response) => {
     try {
+        console.log('deleting a thought');
+        
         // delete thought
         const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
 
@@ -142,8 +160,8 @@ export const deleteThought = async (req: Request, res: Response) => {
 
 /**
  * POST Reaction based on thoughts/:thoughtId/reactions
- * @param string id
- * @param object assignment
+ * @param string thoughtId
+ * @body object reactionBody (reactionId, reactionBody, username)
  * @returns object thought 
 */
 
@@ -151,6 +169,8 @@ export const addReaction = async (req: Request, res: Response) => {
     console.log('You are adding a reaction');
     console.log(req.body);
     try {
+        console.log('adding a reaction');
+        
         const thought = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $addToSet: { reactions: req.body } },
@@ -178,6 +198,8 @@ export const addReaction = async (req: Request, res: Response) => {
 
 export const removeReaction = async (req: Request, res: Response) => {
     try {
+        console.log('removing a reaction');
+        
         const thought = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $pull: { reactions: { reactionId: req.params.reactionId } } },
