@@ -2,7 +2,7 @@
 University of Richmond Bootcamp - Code Challenge 17 - Social Network API
 Created By: Brad Webster in collaboration with edX Coding Bootcamp
 ## Description:
-The Social Network API is a backend application built with Node.js, Express, and MongoDB, designed to simulate a social platform's data functionality. The API allows users to create profiles, post thoughts, add reactions, and connect with friends. It includes full CRUD (Create, Read, Update, Delete) operations for users, thoughts, and friends. This project serves as a foundation for building social platforms applications, with functionality like friend connections, thought management, and reaction systems. The schema structure and API routes are flexible, allowing easy integration into full-stack applications with front-end frameworks like React.
+The Social Network API is a backend application built with Node.js, Express, and MongoDB, designed to simulate a social media platform's data functionality. The API allows users to create profiles, post thoughts, add reactions, and connect with friends. It includes full CRUD (Create, Read, Update, Delete) operations for users, thoughts, and friends. This project serves as a foundation for building social platforms applications, with functionality like friend connections, thought management, and reaction systems. The schema structure and API routes are flexible, allowing easy integration into full-stack applications with front-end frameworks like React.
 
 ## Table of Contents:
   * [Installation](#installation)
@@ -11,7 +11,7 @@ The Social Network API is a backend application built with Node.js, Express, and
   * [Credits](#credits)
 ## Installation: 
   For a live demo of this project, you can just find it here:
-  https://project-pilot-7djn.onrender.com/
+  https://vimeo.com/1017786264?share=copy
   <br/>The following steps will allow you to run the code locally:
   <br/>Step 1: Navigate to : https://github.com/bmw-dev0p/Social-Network-C17
   <br/>Step 2: Clone the repo to download it onto your local computer
