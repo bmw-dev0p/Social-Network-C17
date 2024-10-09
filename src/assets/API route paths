@@ -1,0 +1,455 @@
+_type: export
+__export_format: 4
+__export_date: 2024-10-09T00:57:18.208Z
+__export_source: insomnia.desktop.app:v10.0.0
+resources:
+  - _id: req_bd6a7d58d7fb4b108514fe7e4a8982d0
+    parentId: fld_712d794cdd2f48c6be1aa6214dd0535b
+    modified: 1728158692621
+    created: 1728158527206
+    url: http://localhost:3001/api/users
+    name: All Users
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728158691438
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_712d794cdd2f48c6be1aa6214dd0535b
+    parentId: wrk_84573401ac3b4b30ac838d590e3706a3
+    modified: 1728158782268
+    created: 1728158688650
+    name: USERS
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1728158689750
+    _type: request_group
+  - _id: wrk_84573401ac3b4b30ac838d590e3706a3
+    parentId: null
+    modified: 1728158517299
+    created: 1728158517299
+    name: Social-Network-C17
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_f3a2c8574bc04ee39245cfea273e97cf
+    parentId: fld_712d794cdd2f48c6be1aa6214dd0535b
+    modified: 1728339415718
+    created: 1728158648477
+    url: http://localhost:3001/api/users/67045d4b37614b83b374266a
+    name: Single User
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728158691338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_cf18a8e9d2654273aa5d07390ba8cfe0
+    parentId: fld_712d794cdd2f48c6be1aa6214dd0535b
+    modified: 1728353259431
+    created: 1728158801224
+    url: http://localhost:3001/api/users
+    name: Create User
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"username": "donQuixote",
+        	"email": "don@example.com"
+        	
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728158691288
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8be51b6b500d4f729af9d85f52191829
+    parentId: fld_712d794cdd2f48c6be1aa6214dd0535b
+    modified: 1728339503690
+    created: 1728159018086
+    url: http://localhost:3001/api/users/67045d4b37614b83b374266a
+    name: Update User
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"username": "charlieBrown",
+        	"email": "charlie@example.com"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728158691238
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d6d3354e96dc4869a9b0ae2d60914dfe
+    parentId: fld_712d794cdd2f48c6be1aa6214dd0535b
+    modified: 1728353015520
+    created: 1728159055639
+    url: http://localhost:3001/api/users/670492b95883bb3f4713278a
+    name: Delete User
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728158691138
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f9ec96d7688b4a82bdbe4ca1069128db
+    parentId: fld_9a3ba3019de14a248507f5dee8106d31
+    modified: 1728351390744
+    created: 1728159080332
+    url: http://localhost:3001/api/users/67048c81c3e20e537443a0a9/friends
+    name: Add Friend
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"username": "johnnyDanger"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728159138063
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_9a3ba3019de14a248507f5dee8106d31
+    parentId: wrk_84573401ac3b4b30ac838d590e3706a3
+    modified: 1728158780802
+    created: 1728158703861
+    name: FRIENDS
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1728158689650
+    _type: request_group
+  - _id: req_92e35618ddf049c0b3b3a9119f2197a4
+    parentId: fld_9a3ba3019de14a248507f5dee8106d31
+    modified: 1728349789205
+    created: 1728159142845
+    url: http://localhost:3001/api/users/67048598bdc993ac2155b55e/friends/670486079e3f5dfd10aab39b
+    name: Remove Friend
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728159137963
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2c3227502c584dabb205d5093c93e14a
+    parentId: fld_e107a28522bf4b88b20915b4805ecd28
+    modified: 1728237035040
+    created: 1728159223325
+    url: http://localhost:3001/api/thoughts
+    name: All Thoughts
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728159327050
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_e107a28522bf4b88b20915b4805ecd28
+    parentId: wrk_84573401ac3b4b30ac838d590e3706a3
+    modified: 1728158778228
+    created: 1728158712127
+    name: THOUGHTS
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1728158689550
+    _type: request_group
+  - _id: req_e14876cec154431ba7b51f2dca8dee42
+    parentId: fld_e107a28522bf4b88b20915b4805ecd28
+    modified: 1728353555804
+    created: 1728159250004
+    url: http://localhost:3001/api/thoughts/670492b95883bb3f47132782
+    name: Single Thought
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728159326950
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ff768e877e6b4aebb5e0f7cc1ed0a6d6
+    parentId: fld_e107a28522bf4b88b20915b4805ecd28
+    modified: 1728339592681
+    created: 1728159274969
+    url: http://localhost:3001/api/thoughts
+    name: Create Thought
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"text": "I really hope this code works",
+        	"username": "charlieBrown"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728159326850
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ff236f985e8343d1a174f230536cc8fa
+    parentId: fld_e107a28522bf4b88b20915b4805ecd28
+    modified: 1728340645030
+    created: 1728159304901
+    url: http://localhost:3001/api/thoughts/670461f00ac8cc2347317549
+    name: Update Thought
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"text": "This is a test of the update thought feature.",
+        	"username": "johnSnow"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728159326750
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_14666a0d305d4fb2a5d5acb1f5947607
+    parentId: fld_e107a28522bf4b88b20915b4805ecd28
+    modified: 1728345740153
+    created: 1728159326650
+    url: http://localhost:3001/api/thoughts/670476657b7db9b1645c3020
+    name: Delete Thought
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728159326650
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9de563216f5d428b9b03f804737f3a32
+    parentId: fld_cb83cd93ff1e42d1966f0bb6dd533d22
+    modified: 1728353324582
+    created: 1728159348582
+    url: http://localhost:3001/api/thoughts/670492b95883bb3f47132782/reactions
+    name: Add Reaction
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"text": "Such reaction, many WOW",
+        	"username": "DOGE"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728159381060
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_cb83cd93ff1e42d1966f0bb6dd533d22
+    parentId: wrk_84573401ac3b4b30ac838d590e3706a3
+    modified: 1728158777197
+    created: 1728158717491
+    name: REACTIONS
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1728158689450
+    _type: request_group
+  - _id: req_d96fc7b40ef54f2f98528bf139fbad02
+    parentId: fld_cb83cd93ff1e42d1966f0bb6dd533d22
+    modified: 1728347006233
+    created: 1728159380960
+    url: http://localhost:3001/api/thoughts/67047b5263308ba73bc6f73a/reactions/67047b641a690a4c3ab64735
+    name: Remove Reaction
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.0.0
+    authentication: {}
+    metaSortKey: -1728159380960
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_4bc8a4994cbc207fe7cbffb95a1d7beccc3bfe29
+    parentId: wrk_84573401ac3b4b30ac838d590e3706a3
+    modified: 1728158517300
+    created: 1728158517300
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1728158517300
+    _type: environment
+  - _id: jar_4bc8a4994cbc207fe7cbffb95a1d7beccc3bfe29
+    parentId: wrk_84573401ac3b4b30ac838d590e3706a3
+    modified: 1728158517301
+    created: 1728158517301
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
