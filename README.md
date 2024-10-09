@@ -22,10 +22,12 @@ The Social Network API is a backend application built with Node.js, Express, and
   <br/>Step 7: Enjoy the program by posting to the different api routes
 
 ## Usage:
-  Landing page displaying Search and Save buttons, navigation
-  <br/>![home](https://github.com/bmw-dev0p/Candidate-Search-C13/blob/main/src/assets/usage1.jpg?raw=true)
-  <br/> Saved candidate table
-  <br/>![home](https://github.com/bmw-dev0p/Candidate-Search-C13/blob/main/src/assets/usage2.jpg?raw=true)
+  Insomnia software displaying the API get route for All Users
+  <br/>![allUser](https://github.com/bmw-dev0p/Social-Network-C17/blob/main/src/assets/readme1.jpg?raw=true)
+  <br/> Insomnia software displaying the API post route for adding a Friend to User
+  <br/>![home](https://github.com/bmw-dev0p/Social-Network-C17/blob/main/src/assets/readme2.jpg?raw=true)
+  <br/> Insomnia software displaying the API post route for adding a Reaction to Thought
+  <br/>![home](https://github.com/bmw-dev0p/Social-Network-C17/blob/main/src/assets/readme3.jpg?raw=true)
 
 ## Features:
 ### Coding Language(s): 
